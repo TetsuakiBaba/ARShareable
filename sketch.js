@@ -21,11 +21,17 @@ function copySharingLink() {
 Dropzone.autoDiscover = false;
 
 var myDropzone = new Dropzone(".dropzone", {
-    autoProcessQueue: false,
-    acceptedFiles: '.usdz,.gltf',
+    autoProcessQueue: true,
+    acceptedFiles: '.usdz,.gltf,.glb',
+    maxFilesize: 20,
     parallelUploads: 1, // Number of files process at a time (default 2)
     init: function () {
         this.on("complete", function (file) {
+            if (file.status == 'error') {
+                alert('許可されていないファイル形式です');
+                this.removeFile(file);
+                return;
+            }
             // generate sharing link 
             let link = window.location.href + "viewer.html?id=" + g_uploaded_filename;
             document.querySelector("#sharing_link").value = link;
