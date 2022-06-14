@@ -18,6 +18,11 @@ function copySharingLink() {
     document.querySelector("#sharing_link").select();
     document.execCommand('copy');
 }
+
+function downloadQR() {
+    qrCode.download({ name: "qr", extension: "png" });
+}
+
 Dropzone.autoDiscover = false;
 
 var myDropzone = new Dropzone(".dropzone", {
@@ -40,7 +45,7 @@ var myDropzone = new Dropzone(".dropzone", {
             qrCode = new QRCodeStyling({
                 width: 300,
                 height: 300,
-                type: "png",
+                type: "svg",
                 data: link,
                 //image: "https://upload.wikimedia.org/wikipedia/commons/5/51/Facebook_f_logo_%282019%29.svg",
                 dotsOptions: {
@@ -60,6 +65,7 @@ var myDropzone = new Dropzone(".dropzone", {
                 ele.removeChild(ele.firstChild);
             }
             qrCode.append(document.getElementById("canvas"));
+
             myModal.toggle();
         });
     },
